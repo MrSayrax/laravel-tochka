@@ -1,0 +1,33 @@
+{
+    "name": "mrsayrax/laravel-tochka",
+    "description": "Implementation of API methods Tochka Bank for Laravel.",
+    "keywords": [
+        "Tochka",
+        "API",
+        "bank"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Surin",
+            "email": "sss@srx.su"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.6",
+        "sebastian/version": "^1.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "MrSayrax\\Tochka\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MrSayrax\\Tochka\\Tests\\": "tests/"
+        }
+    }
+}
