@@ -28,7 +28,7 @@
             "MrSayrax\\Tochka\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/helper.php"
         ]
     },
     "autoload-dev": {
