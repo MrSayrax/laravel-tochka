@@ -42,11 +42,12 @@
         },
         "laravel":{
             "providers": [
-                "MrSayrax\\Tochka\\DadataServiceProvider"
+                "MrSayrax\\Tochka\\TochkaServiceProvider"
             ],
             "aliases": {
                 "Tochka": "MrSayrax\\Tochka\\Facades\\Tochka"
             }
         }
-    }
+    },
+  "minimum-stability": "dev"
 }
