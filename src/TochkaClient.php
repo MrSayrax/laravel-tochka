@@ -11,7 +11,7 @@ class TochkaClient
     protected $url;
     protected $httpClient;
     protected $accessToken;
-  //  private $tokensService;
+    private   $tokenService;
 
     /**
      * ClientHint constructor.
@@ -20,6 +20,7 @@ class TochkaClient
     {
         $this->config = config('tochka');
         $this->accessToken = $this->config['token'];
+        $this->tokenService = new TochkaTokenService();
     }
 
 
@@ -31,7 +32,7 @@ class TochkaClient
      */
     protected function getResponse(string $uri = null)
     {
-        $full_path = $this->tokensService->url . $this->tokensService->apiMode . $uri;
+        $full_path = $this->tokenService->url . $this->tokenService->apiMode . $uri;
 
         $request = $this->getHttpClient()->get($full_path, [
             'headers' => [
@@ -60,7 +61,7 @@ class TochkaClient
      */
     protected function postResponse(string $uri = null, array $post_params = [])
     {
-        $full_path = $this->tokensService->url . $this->tokensService->apiMode . $uri;
+        $full_path = $this->tokenService->url . $this->tokenService->apiMode . $uri;
 
         $request = $this->getHttpClient()->post($full_path, [
             'headers' => [
