@@ -28,7 +28,7 @@ class TochkaServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('tochka', function () {
-            return new Client();
+            return new Tochka();
         });
         $this->mergeConfigFrom(__DIR__.'/../config/tochka.php', 'tochka');
     }
