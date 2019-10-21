@@ -18,7 +18,6 @@ class TochkaClient
     public function __construct()
     {
         $this->config = config('tochka');
-        $this->accessToken = $this->config['token'];
         $this->tokenService = new TochkaTokenService();
     }
 
