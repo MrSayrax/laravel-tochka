@@ -3,8 +3,7 @@
 
 namespace MrSayrax\Tochka;
 
-
-use GuzzleHttp\Client;
+use MrSayrax\Tochka\TochkaRequest;
 
 class TochkaClient
 {
@@ -34,19 +33,17 @@ class TochkaClient
     {
         $full_path = $this->tokenService->url . $this->tokenService->apiMode . $uri;
 
-        $request = $this->getHttpClient()->get($full_path, [
+        $request = TochkaRequest::makeRequest($full_path, [
             'headers' => [
                 'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getAccessToken(),
             ],
-            'params' => ['access_token' => $this->getAccessToken()]
-        ]);
+       //     'params' => ['access_token' => $this->getAccessToken()]
+        ], 'get');
 
-        $response = $request ? $request->getBody()->getContents() : null;
-        $status = $request ? $request->getStatusCode() : 500;
-
-        if ($response && $status === 200 && $response !== 'null') {
-            return (object) json_decode($response);
+        if ($request['response'] && $request['statuse'] === 200 ) {
+            return (object) json_decode($request['response']);
         }
 
         return null;
@@ -63,32 +60,20 @@ class TochkaClient
     {
         $full_path = $this->tokenService->url . $this->tokenService->apiMode . $uri;
 
-        $request = $this->getHttpClient()->post($full_path, [
+        $request = TochkaRequest::makeRequest($full_path, [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getAccessToken(),
             ],
             'json' => $post_params
-        ]);
+        ], 'post');
 
-        $response = $request ? $request->getBody()->getContents() : null;
-        $status = $request ? $request->getStatusCode() : 500;
-
-        if ($response && $status === 200 && $response !== 'null') {
-            return (object) json_decode($response);
+        if ($request['response'] && $request['statuse'] === 200 ) {
+            return (object) json_decode($request['response']);
         }
 
         return null;
     }
-
-    private function getHttpClient(){
-
-        if (is_null($this->httpClient)) {
-            $this->httpClient = new Client();
-        }
-        return $this->httpClient;
-    }
-
 
 }
