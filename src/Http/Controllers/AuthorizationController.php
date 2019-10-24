@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 class AuthorizationController
 {
 
+    protected $url = 'https://enter.tochka.com/';
 
     /**
      * The response factory implementation.
@@ -35,9 +36,20 @@ class AuthorizationController
      */
     public function authorize()
     {
-        return $this->response->view('tochka::authorize', [
-            'client_id' => config('tochka.client_id')
-        ]);
+        $mode = strtolower(config('tochka.method'));
+
+        if ($mode === 'api') {
+            $client_id = config('tochka.client_id');
+
+            if (!$client_id) {
+                echo 'Unspecified client_id.';
+                return false;
+            }
+
+            return $this->response->redirectTo( $this->url."api/v1/authorize/?response_type=code&client_id={$client_id}");
+        }
+
+        return $this->response->redirectTo( $this->url."sandbox/v1/login/");
     }
 
 
