@@ -15,6 +15,8 @@ class TochkaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'tochka');
+
         $configPath = __DIR__ . '/../config/tochka.php';
         $publishPath = config_path('tochka.php');
         $this->publishes([$configPath => $publishPath], 'config');

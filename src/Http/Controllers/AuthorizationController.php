@@ -35,7 +35,7 @@ class AuthorizationController
      */
     public function authorize()
     {
-        return $this->response->view('laravel-tochka::authorize', [
+        return $this->response->view('tochka::authorize', [
             'client_id' => config('tochka.client_id')
         ]);
     }
