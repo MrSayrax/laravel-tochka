@@ -36,7 +36,7 @@ class AuthorizationController
      */
     public function authorize()
     {
-        $mode = strtolower(config('tochka.method'));
+        $mode = strtolower(config('tochka.mode'));
 
         if ($mode === 'api') {
             $client_id = config('tochka.client_id');

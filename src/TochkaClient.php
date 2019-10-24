@@ -37,8 +37,7 @@ class TochkaClient
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getAccessToken(),
-            ],
-       //     'params' => ['access_token' => $this->getAccessToken()]
+            ]
         ], 'get');
 
         if ($request['response'] && $request['statuse'] === 200 ) {

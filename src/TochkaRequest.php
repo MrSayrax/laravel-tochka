@@ -48,7 +48,7 @@ class TochkaRequest
     }
 
 
-    public static function makeRequest(String $url,  Array $options, String $method = 'get')
+    public static function makeRequest(string $url,  array $options, string $method = 'get')
     {
         $request =  ($method === 'get') ? self::$instance->getHttpClient()->get($url, $options)
                                         : self::$instance->getHttpClient()->post($url, $options);
