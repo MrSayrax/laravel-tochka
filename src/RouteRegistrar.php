@@ -44,7 +44,7 @@ class RouteRegistrar
     public function forAuthorization()
     {
         $this->router->group(['middleware' => ['web', 'auth']], function ($router) {
-            $router->get('/tochka/authorize', [
+            $router->get('/authorize', [
                 'uses' => 'AuthorizationController@authorize',
                 'as' => 'tochka.authorizations.authorize',
             ]);
@@ -59,7 +59,7 @@ class RouteRegistrar
     public function forAccessTokens()
     {
         $this->router->group(['middleware' => ['web', 'auth']], function ($router) {
-            $router->get('/tochka/token', [
+            $router->get('/token', [
                 'uses' => 'AuthorizedAccessTokenController@forUser',
                 'as' => 'tochka.token.index',
             ]);
