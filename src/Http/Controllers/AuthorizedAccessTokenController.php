@@ -5,13 +5,17 @@ namespace MrSayrax\Tochka\Http\Controllers;
 
 
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use MrSayrax\Tochka\TochkaRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AuthorizedAccessTokenController
 {
 
     protected $url = 'https://enter.tochka.com/';
+    protected $data = null;
+
     /**
      * The response factory implementation.
      *
@@ -27,7 +31,7 @@ class AuthorizedAccessTokenController
      */
     public function __construct( ResponseFactory $response)
     {
-        $this->response = $response;
+        $this->data = Cache::get('laravel-tochka-data', []);
     }
 
 
@@ -52,18 +56,30 @@ class AuthorizedAccessTokenController
             $url = $this->url.'api/v1/oauth2/token';
         }
 
-        $response = TochkaRequest::makeRequest($url,[
-            'headers' => [
+        try {
+            $response = TochkaRequest::makeRequest($url,[
+                'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json'
                 ],
-            'json' => [
-                'grant_type' => 'authorization_code',
-                'code' => $request->code,
-                'client_id' => config('tochka.client_id'),
-                'client_secret' => config('tochka.client_secret'),
-            ]
-        ] , 'post');
+                'json' => [
+                    'grant_type' => 'authorization_code',
+                    'code' => $request->code,
+                    'client_id' => config('tochka.client_id'),
+                    'client_secret' => config('tochka.client_secret'),
+                ]
+            ] , 'post');
+        } catch (Exception $e) {
+            dd($e);
+        }
+
+        $response = json_decode($response['response']);
+
+        $this->data[Auth::user()->id] = $response;
+
+        Cache::put('laravel-tochka-data', $this->data);
+
+
 
         dd($response);
     }
